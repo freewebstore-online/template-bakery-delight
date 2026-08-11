@@ -9,9 +9,17 @@
       content="A luxury Australian bakery and dessert shop template for FreeWebStore."
     />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: ['class', '.theme-toggle:checked ~ .theme-wrapper']
+      }
+    </script>
   </head>
-  <body class="bg-[#fbf6ef] text-stone-900 antialiased">
-    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+  <body class="antialiased">
+    <input type="checkbox" id="theme-toggle" class="theme-toggle sr-only" />
+    <div class="theme-wrapper">
+      <div class="min-h-screen bg-[#fff8f0] dark:bg-[#121212] text-[#2c1810] dark:text-[#f5f5f5] transition-colors duration-300">
+        <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
       <div
         class="absolute -top-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-rose-200/40 blur-3xl"
       ></div>
@@ -24,8 +32,10 @@
     </div>
 
     <header
-      class="sticky top-0 z-50 border-b border-white/60 bg-[#fbf6ef]/90 backdrop-blur-xl"
+      class="sticky top-0 z-50 border-b border-white/60 dark:border-[#3a3a3a] bg-[#fff8f0]/90 dark:bg-[#121212]/90 backdrop-blur-xl transition-colors duration-300"
     >
+      <input type="checkbox" id="mobile-menu-toggle" class="peer sr-only" />
+
       <div
         class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
       >
@@ -42,7 +52,7 @@
               Artisan Bakery
             </p>
             <h1
-              class="text-xl font-semibold tracking-tight text-stone-900"
+              class="text-xl font-semibold tracking-tight text-stone-900 dark:text-[#f5f5f5] transition-colors duration-300"
               data-fws-slot="business.name"
             >
               Bakery Delight
@@ -50,68 +60,88 @@
           </div>
         </a>
         <nav
-          class="hidden items-center gap-8 text-sm font-medium text-stone-700 md:flex"
+          class="hidden items-center gap-8 text-sm font-medium text-stone-700 dark:text-[#c0c0c0] md:flex"
         >
-          <a href="#about" class="transition hover:text-amber-800">About</a>
-          <a href="#products" class="transition hover:text-amber-800"
+          <a href="#about" class="transition hover:text-amber-800 dark:hover:text-[#f4a460]">About</a>
+          <a href="#products" class="transition hover:text-amber-800 dark:hover:text-[#f4a460]"
             >Products</a
           >
-          <a href="#gallery" class="transition hover:text-amber-800">Gallery</a>
-          <a href="#contact" class="transition hover:text-amber-800">Contact</a>
+          <a href="#gallery" class="transition hover:text-amber-800 dark:hover:text-[#f4a460]">Gallery</a>
+          <a href="#contact" class="transition hover:text-amber-800 dark:hover:text-[#f4a460]">Contact</a>
         </nav>
-        <a
-          href="#contact"
-          class="inline-flex items-center rounded-full bg-[#8b5e3c] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-900/20 transition hover:-translate-y-0.5 hover:bg-[#744a2b]"
-        >
-          Visit Today
-        </a>
-        <button
-          id="mobile-menu-button"
-          aria-expanded="false"
-          class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-stone-700 hover:bg-white/60"
-        >
-          <span class="sr-only">Open menu</span>
-          <svg
-            class="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+        <!-- MOD: Theme mode switcher in navigation actions (desktop + mobile) -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <label
+            for="theme-toggle"
+            class="inline-flex items-center gap-2 rounded-full border border-stone-300 dark:border-[#3a3a3a] bg-white/50 dark:bg-[#1e1e1e]/50 px-3 py-2 text-sm font-semibold cursor-pointer hover:bg-white/80 dark:hover:bg-[#242424] transition-colors duration-300 select-none"
+            title="Toggle theme"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        </button>
+            <span class="dark:hidden">☀️ <span class="hidden sm:inline-block">Light</span></span>
+            <span class="hidden dark:inline-block">🌙 <span class="hidden sm:inline-block">Dark</span></span>
+          </label>
+          <a
+            href="#contact"
+            class="hidden sm:inline-flex items-center rounded-full bg-[#8b5e3c] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-amber-900/20 transition hover:-translate-y-0.5 hover:bg-[#744a2b]"
+          >
+            Visit Today
+          </a>
+          <label
+            for="mobile-menu-toggle"
+            class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-stone-700 dark:text-[#c0c0c0] hover:bg-white/60 dark:hover:bg-[#242424] cursor-pointer"
+          >
+            <span class="sr-only">Open menu</span>
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </label>
+        </div>
       </div>
       <div
         id="mobile-menu"
-        class="md:hidden hidden border-t border-white/60 bg-[#fbf6ef]/95"
+        class="hidden peer-checked:block md:hidden border-t border-white/60 dark:border-[#3a3a3a] bg-[#fbf6ef]/95 dark:bg-[#1e1e1e]/95 transition-colors duration-300"
       >
         <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-          <nav class="flex flex-col gap-3 text-sm font-medium text-stone-700">
+          <nav class="flex flex-col gap-3 text-sm font-medium text-stone-700 dark:text-[#c0c0c0]">
             <a
               href="#about"
-              class="block rounded-md px-3 py-2 hover:bg-white/60"
+              onclick="document.getElementById('mobile-menu-toggle').checked = false"
+              class="block rounded-md px-3 py-2 hover:bg-white/60 dark:hover:bg-[#242424]"
               >About</a
             >
             <a
               href="#products"
-              class="block rounded-md px-3 py-2 hover:bg-white/60"
+              onclick="document.getElementById('mobile-menu-toggle').checked = false"
+              class="block rounded-md px-3 py-2 hover:bg-white/60 dark:hover:bg-[#242424]"
               >Products</a
             >
             <a
               href="#gallery"
-              class="block rounded-md px-3 py-2 hover:bg-white/60"
+              onclick="document.getElementById('mobile-menu-toggle').checked = false"
+              class="block rounded-md px-3 py-2 hover:bg-white/60 dark:hover:bg-[#242424]"
               >Gallery</a
             >
             <a
               href="#contact"
-              class="block rounded-md px-3 py-2 hover:bg-white/60"
+              onclick="document.getElementById('mobile-menu-toggle').checked = false"
+              class="block rounded-md px-3 py-2 hover:bg-white/60 dark:hover:bg-[#242424]"
               >Contact</a
+            >
+            <a
+              href="#contact"
+              onclick="document.getElementById('mobile-menu-toggle').checked = false"
+              class="block rounded-md px-3 py-2 sm:hidden bg-[#8b5e3c] text-white"
+              >Visit Today</a
             >
           </nav>
         </div>
@@ -125,26 +155,26 @@
         >
           <div class="max-w-2xl">
             <p
-              class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-amber-800 shadow-sm"
+              class="inline-flex items-center gap-2 rounded-full border border-amber-200 dark:border-[#3a3a3a] bg-white/70 dark:bg-[#1e1e1e]/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-amber-800 dark:text-[#f4a460] shadow-sm"
             >
               <span class="h-2 w-2 rounded-full bg-rose-400"></span>
               French-inspired bakery and café
             </p>
             <h2
-              class="mt-6 text-5xl font-semibold tracking-tight text-stone-950 sm:text-6xl lg:text-7xl"
+              class="mt-6 text-5xl font-semibold tracking-tight text-stone-950 dark:text-[#f5f5f5] transition-colors duration-300"
             >
               <span class="block">Warm pastries,</span>
               <span class="block text-[#8b5e3c]">crafted like luxury.</span>
             </h2>
             <p
-              class="mt-6 max-w-xl text-lg leading-8 text-stone-700"
+              class="mt-6 max-w-xl text-lg leading-8 text-stone-700 dark:text-[#c0c0c0] transition-colors duration-300"
               data-fws-slot="business.tagline"
             >
               Freshly baked croissants, elegant cakes, and slow mornings made
               memorable with artisan coffee and a cosy premium café experience.
             </p>
             <p
-              class="mt-4 max-w-xl text-base leading-7 text-stone-600"
+              class="mt-4 max-w-xl text-base leading-7 text-stone-600 dark:text-[#c0c0c0] transition-colors duration-300"
               data-fws-slot="business.description"
             >
               Bakery Delight blends classic French technique with a modern
@@ -161,43 +191,43 @@
               </a>
               <a
                 href="#contact"
-                class="inline-flex items-center justify-center rounded-full border border-stone-300 bg-white/80 px-7 py-4 text-sm font-semibold text-stone-800 transition hover:border-amber-300 hover:bg-amber-50"
+                class="inline-flex items-center justify-center rounded-full border border-stone-300 dark:border-[#3a3a3a] bg-white/80 dark:bg-[#1e1e1e]/80 px-7 py-4 text-sm font-semibold text-stone-800 dark:text-[#f5f5f5] transition hover:border-amber-300 dark:hover:border-[#f4a460] hover:bg-amber-50 dark:hover:bg-[#242424] duration-300"
               >
                 Reserve a Cake
               </a>
             </div>
             <div class="mt-10 grid grid-cols-3 gap-4 max-w-xl">
               <div
-                class="rounded-3xl bg-white/80 p-5 shadow-lg shadow-stone-200/60 ring-1 ring-white"
+                class="rounded-3xl bg-white dark:bg-[#1e1e1e] p-5 shadow-lg shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
               >
-                <p class="text-3xl font-semibold text-stone-950">25+</p>
-                <p class="mt-1 text-sm text-stone-600">Signature pastries</p>
+                <p class="text-3xl font-semibold text-stone-950 dark:text-[#f5f5f5]">25+</p>
+                <p class="mt-1 text-sm text-stone-600 dark:text-[#c0c0c0]">Signature pastries</p>
               </div>
               <div
-                class="rounded-3xl bg-white/80 p-5 shadow-lg shadow-stone-200/60 ring-1 ring-white"
+                class="rounded-3xl bg-white dark:bg-[#1e1e1e] p-5 shadow-lg shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
               >
-                <p class="text-3xl font-semibold text-stone-950">4.9</p>
-                <p class="mt-1 text-sm text-stone-600">Guest rating</p>
+                <p class="text-3xl font-semibold text-stone-950 dark:text-[#f5f5f5]">4.9</p>
+                <p class="mt-1 text-sm text-stone-600 dark:text-[#c0c0c0]">Guest rating</p>
               </div>
               <div
-                class="rounded-3xl bg-white/80 p-5 shadow-lg shadow-stone-200/60 ring-1 ring-white"
+                class="rounded-3xl bg-white dark:bg-[#1e1e1e] p-5 shadow-lg shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
               >
-                <p class="text-3xl font-semibold text-stone-950">Daily</p>
-                <p class="mt-1 text-sm text-stone-600">Fresh baking</p>
+                <p class="text-3xl font-semibold text-stone-950 dark:text-[#f5f5f5]">Daily</p>
+                <p class="mt-1 text-sm text-stone-600 dark:text-[#c0c0c0]">Fresh baking</p>
               </div>
             </div>
           </div>
 
           <div class="relative">
             <div
-              class="absolute -left-6 top-8 hidden rounded-3xl bg-white/90 p-4 shadow-2xl shadow-stone-300/30 ring-1 ring-white lg:block"
+              class="absolute -left-6 top-8 hidden rounded-3xl bg-white/90 dark:bg-[#1e1e1e]/90 p-4 shadow-2xl shadow-stone-300/30 dark:shadow-black/50 ring-1 ring-white dark:ring-[#3a3a3a] lg:block transition-colors duration-300"
             >
               <p
                 class="text-xs font-semibold uppercase tracking-[0.25em] text-amber-700"
               >
                 Chef’s choice
               </p>
-              <p class="mt-1 text-sm text-stone-700">
+              <p class="mt-1 text-sm text-stone-700 dark:text-[#c0c0c0]">
                 Almond croissant with sea salt caramel.
               </p>
             </div>
@@ -211,7 +241,7 @@
               />
             </div>
             <div
-              class="absolute -bottom-6 right-4 max-w-xs rounded-3xl bg-[#fffaf3]/95 p-5 shadow-2xl shadow-stone-300/40 ring-1 ring-white backdrop-blur"
+              class="absolute -bottom-6 right-4 max-w-xs rounded-3xl bg-[#fffaf3]/95 dark:bg-[#1e1e1e]/95 p-5 shadow-2xl shadow-stone-300/40 dark:shadow-black/50 ring-1 ring-white dark:ring-[#3a3a3a] backdrop-blur transition-colors duration-300"
             >
               <div class="flex items-center gap-4">
                 <div
@@ -220,10 +250,10 @@
                   🥐
                 </div>
                 <div>
-                  <p class="text-sm font-semibold text-stone-900">
+                  <p class="text-sm font-semibold text-stone-900 dark:text-[#f5f5f5]">
                     Fresh from the oven
                   </p>
-                  <p class="mt-1 text-sm leading-6 text-stone-600">
+                  <p class="mt-1 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                     Buttery layers, delicate finishes, and elegant presentation.
                   </p>
                 </div>
@@ -245,12 +275,12 @@
               About Bakery Delight
             </p>
             <h3
-              class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 sm:text-4xl"
+              class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 dark:text-[#f5f5f5] sm:text-4xl"
             >
               A refined neighbourhood bakery with a warm European soul.
             </h3>
             <p
-              class="mt-6 max-w-2xl text-lg leading-8 text-stone-700"
+              class="mt-6 max-w-2xl text-lg leading-8 text-stone-700 dark:text-[#c0c0c0] transition-colors duration-300"
               data-fws-slot="about.body"
             >
               From morning croissants to celebration cakes, our kitchen is
@@ -260,32 +290,32 @@
             </p>
             <div class="mt-8 grid gap-4 sm:grid-cols-3">
               <div
-                class="rounded-3xl bg-white/80 p-6 shadow-lg shadow-stone-200/60 ring-1 ring-white"
+                class="rounded-3xl bg-white dark:bg-[#1e1e1e] p-6 shadow-lg shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
               >
-                <p class="text-lg font-semibold text-stone-950">
+                <p class="text-lg font-semibold text-stone-950 dark:text-[#f5f5f5]">
                   Handmade Daily
                 </p>
-                <p class="mt-2 text-sm leading-6 text-stone-600">
+                <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                   Small-batch pastries baked fresh every morning.
                 </p>
               </div>
               <div
-                class="rounded-3xl bg-white/80 p-6 shadow-lg shadow-stone-200/60 ring-1 ring-white"
+                class="rounded-3xl bg-white dark:bg-[#1e1e1e] p-6 shadow-lg shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
               >
-                <p class="text-lg font-semibold text-stone-950">
+                <p class="text-lg font-semibold text-stone-950 dark:text-[#f5f5f5]">
                   Seasonal Menus
                 </p>
-                <p class="mt-2 text-sm leading-6 text-stone-600">
+                <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                   Rotating flavours inspired by local ingredients.
                 </p>
               </div>
               <div
-                class="rounded-3xl bg-white/80 p-6 shadow-lg shadow-stone-200/60 ring-1 ring-white"
+                class="rounded-3xl bg-white dark:bg-[#1e1e1e] p-6 shadow-lg shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
               >
-                <p class="text-lg font-semibold text-stone-950">
+                <p class="text-lg font-semibold text-stone-950 dark:text-[#f5f5f5]">
                   Custom Orders
                 </p>
-                <p class="mt-2 text-sm leading-6 text-stone-600">
+                <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                   Elegant cakes for weddings, birthdays, and events.
                 </p>
               </div>
@@ -329,7 +359,10 @@
         </div>
       </section>
 
-      <section id="products" class="bg-white/55 py-16 sm:py-20 lg:py-24">
+      <section
+        id="products"
+        class="bg-white/55 dark:bg-[#242424]/90 py-16 sm:py-20 lg:py-24 transition-colors duration-300"
+      >
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div
             class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
@@ -341,12 +374,12 @@
                 Featured Products
               </p>
               <h3
-                class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 sm:text-4xl"
+                class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 dark:text-[#f5f5f5]"
               >
                 Signature bakes for every indulgent moment.
               </h3>
             </div>
-            <p class="max-w-2xl text-stone-600">
+            <p class="max-w-2xl text-stone-600 dark:text-[#c0c0c0] transition-colors duration-300">
               A curated selection of crowd favourites, plated with care and
               prepared to look as beautiful as they taste.
             </p>
@@ -354,7 +387,7 @@
 
           <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             <article
-              class="group overflow-hidden rounded-[2rem] bg-white shadow-xl shadow-stone-200/70 ring-1 ring-stone-200/40 transition hover:-translate-y-1 hover:shadow-2xl"
+              class="group overflow-hidden rounded-[2rem] bg-white dark:bg-[#1e1e1e] shadow-xl shadow-stone-200/70 dark:shadow-black/40 ring-1 ring-stone-200/40 dark:ring-[#3a3a3a] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
             >
               <img
                 src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=900&q=80"
@@ -362,16 +395,16 @@
                 class="h-72 w-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div class="p-6">
-                <h4 class="text-xl font-semibold text-stone-950">
+                <h4 class="text-xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
                   Vanilla Cloud Cake
                 </h4>
-                <p class="mt-2 text-sm leading-6 text-stone-600">
+                <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                   Light sponge, berry compote, whipped mascarpone.
                 </p>
               </div>
             </article>
             <article
-              class="group overflow-hidden rounded-[2rem] bg-white shadow-xl shadow-stone-200/70 ring-1 ring-stone-200/40 transition hover:-translate-y-1 hover:shadow-2xl"
+              class="group overflow-hidden rounded-[2rem] bg-white dark:bg-[#1e1e1e] shadow-xl shadow-stone-200/70 dark:shadow-black/40 ring-1 ring-stone-200/40 dark:ring-[#3a3a3a] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
             >
               <img
                 src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80"
@@ -379,16 +412,16 @@
                 class="h-72 w-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div class="p-6">
-                <h4 class="text-xl font-semibold text-stone-950">
+                <h4 class="text-xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
                   Butter Croissant
                 </h4>
-                <p class="mt-2 text-sm leading-6 text-stone-600">
+                <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                   Golden layers with a crisp shell and tender centre.
                 </p>
               </div>
             </article>
             <article
-              class="group overflow-hidden rounded-[2rem] bg-white shadow-xl shadow-stone-200/70 ring-1 ring-stone-200/40 transition hover:-translate-y-1 hover:shadow-2xl"
+              class="group overflow-hidden rounded-[2rem] bg-white dark:bg-[#1e1e1e] shadow-xl shadow-stone-200/70 dark:shadow-black/40 ring-1 ring-stone-200/40 dark:ring-[#3a3a3a] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
             >
               <img
                 src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=900&q=80"
@@ -396,16 +429,16 @@
                 class="h-72 w-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div class="p-6">
-                <h4 class="text-xl font-semibold text-stone-950">
+                <h4 class="text-xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
                   Caramel Donuts
                 </h4>
-                <p class="mt-2 text-sm leading-6 text-stone-600">
+                <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                   Soft, glossy, and finished with delicate sea salt.
                 </p>
               </div>
             </article>
             <article
-              class="group overflow-hidden rounded-[2rem] bg-white shadow-xl shadow-stone-200/70 ring-1 ring-stone-200/40 transition hover:-translate-y-1 hover:shadow-2xl"
+              class="group overflow-hidden rounded-[2rem] bg-white dark:bg-[#1e1e1e] shadow-xl shadow-stone-200/70 dark:shadow-black/40 ring-1 ring-stone-200/40 dark:ring-[#3a3a3a] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
             >
               <img
                 src="https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&w=900&q=80"
@@ -413,10 +446,10 @@
                 class="h-72 w-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div class="p-6">
-                <h4 class="text-xl font-semibold text-stone-950">
+                <h4 class="text-xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
                   Country Loaf
                 </h4>
-                <p class="mt-2 text-sm leading-6 text-stone-600">
+                <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                   Crusty, aromatic, and ideal for brunch spreads.
                 </p>
               </div>
@@ -428,17 +461,17 @@
       <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div class="grid gap-6 md:grid-cols-3">
           <article
-            class="rounded-[2rem] bg-white p-8 shadow-xl shadow-stone-200/60 ring-1 ring-stone-200/40"
+            class="rounded-[2rem] bg-white dark:bg-[#1e1e1e] p-8 shadow-xl shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-stone-200/40 dark:ring-[#3a3a3a] transition-colors duration-300"
           >
             <p
               class="text-sm font-semibold uppercase tracking-[0.3em] text-amber-700"
             >
               Best Seller
             </p>
-            <h3 class="mt-4 text-2xl font-semibold text-stone-950">
+            <h3 class="mt-4 text-2xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
               Salted Honey Tart
             </h3>
-            <p class="mt-3 text-stone-600">
+            <p class="mt-3 text-stone-600 dark:text-[#c0c0c0]">
               Silky custard, delicate glaze, and a buttery shell that melts on
               the tongue.
             </p>
@@ -451,17 +484,17 @@
             </div>
           </article>
           <article
-            class="rounded-[2rem] bg-[#fbf0e6] p-8 shadow-xl shadow-amber-900/10 ring-1 ring-white"
+            class="rounded-[2rem] bg-[#fbf0e6] dark:bg-[#242424] p-8 shadow-xl shadow-amber-900/10 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
           >
             <p
               class="text-sm font-semibold uppercase tracking-[0.3em] text-amber-800"
             >
               Best Seller
             </p>
-            <h3 class="mt-4 text-2xl font-semibold text-stone-950">
+            <h3 class="mt-4 text-2xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
               Chocolate Mousse Dome
             </h3>
-            <p class="mt-3 text-stone-700">
+            <p class="mt-3 text-stone-700 dark:text-[#c0c0c0]">
               Rich cocoa layers with a glossy finish and a refined plated
               dessert feel.
             </p>
@@ -474,17 +507,17 @@
             </div>
           </article>
           <article
-            class="rounded-[2rem] bg-white p-8 shadow-xl shadow-stone-200/60 ring-1 ring-stone-200/40"
+            class="rounded-[2rem] bg-white dark:bg-[#1e1e1e] p-8 shadow-xl shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-stone-200/40 dark:ring-[#3a3a3a] transition-colors duration-300"
           >
             <p
               class="text-sm font-semibold uppercase tracking-[0.3em] text-amber-700"
             >
               Best Seller
             </p>
-            <h3 class="mt-4 text-2xl font-semibold text-stone-950">
+            <h3 class="mt-4 text-2xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
               Raspberry Éclair
             </h3>
-            <p class="mt-3 text-stone-600">
+            <p class="mt-3 text-stone-600 dark:text-[#c0c0c0]">
               Fresh fruit brightness balanced with cream and a crisp choux
               shell.
             </p>
@@ -499,7 +532,10 @@
         </div>
       </section>
 
-      <section id="gallery" class="bg-white/60 py-16 sm:py-20 lg:py-24">
+      <section
+        id="gallery"
+        class="bg-white/60 dark:bg-[#242424]/90 py-16 sm:py-20 lg:py-24 transition-colors duration-300"
+      >
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="max-w-2xl">
             <p
@@ -508,7 +544,7 @@
               Bakery Gallery
             </p>
             <h3
-              class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 sm:text-4xl"
+              class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 dark:text-[#f5f5f5] sm:text-4xl"
             >
               Instagram-worthy details from the kitchen to the counter.
             </h3>
@@ -574,73 +610,73 @@
               Why Choose Us
             </p>
             <h3
-              class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 sm:text-4xl"
+              class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 dark:text-[#f5f5f5]"
             >
               A bakery experience built around quality, beauty, and comfort.
             </h3>
-            <p class="mt-5 text-stone-600">
+            <p class="mt-5 text-stone-600 dark:text-[#c0c0c0]">
               From texture to presentation, every detail is designed to feel
               premium while staying approachable and warm.
             </p>
           </div>
           <div class="grid gap-4 sm:grid-cols-2">
             <div
-              class="rounded-[1.75rem] bg-white p-6 shadow-lg shadow-stone-200/60 ring-1 ring-white"
+              class="rounded-[1.75rem] bg-white dark:bg-[#1e1e1e] p-6 shadow-lg shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
             >
               <div
                 class="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 text-xl"
               >
                 ★
               </div>
-              <h4 class="mt-4 text-xl font-semibold text-stone-950">
+              <h4 class="mt-4 text-xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
                 Crafted by hand
               </h4>
-              <p class="mt-2 text-sm leading-6 text-stone-600">
+              <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                 Small-batch recipes, careful techniques, and artisan finishes.
               </p>
             </div>
             <div
-              class="rounded-[1.75rem] bg-white p-6 shadow-lg shadow-stone-200/60 ring-1 ring-white"
+              class="rounded-[1.75rem] bg-white dark:bg-[#1e1e1e] p-6 shadow-lg shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
             >
               <div
                 class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-xl"
               >
                 ☕
               </div>
-              <h4 class="mt-4 text-xl font-semibold text-stone-950">
+              <h4 class="mt-4 text-xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
                 Coffee pairing
               </h4>
-              <p class="mt-2 text-sm leading-6 text-stone-600">
+              <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                 Thoughtful espresso and dessert combinations for every mood.
               </p>
             </div>
             <div
-              class="rounded-[1.75rem] bg-white p-6 shadow-lg shadow-stone-200/60 ring-1 ring-white"
+              class="rounded-[1.75rem] bg-white dark:bg-[#1e1e1e] p-6 shadow-lg shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
             >
               <div
                 class="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-100 text-xl"
               >
                 ⏱
               </div>
-              <h4 class="mt-4 text-xl font-semibold text-stone-950">
+              <h4 class="mt-4 text-xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
                 Fresh all day
               </h4>
-              <p class="mt-2 text-sm leading-6 text-stone-600">
+              <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                 Frequent bakes keep the case abundant and inviting.
               </p>
             </div>
             <div
-              class="rounded-[1.75rem] bg-white p-6 shadow-lg shadow-stone-200/60 ring-1 ring-white"
+              class="rounded-[1.75rem] bg-white dark:bg-[#1e1e1e] p-6 shadow-lg shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
             >
               <div
                 class="flex h-12 w-12 items-center justify-center rounded-2xl bg-lime-100 text-xl"
               >
                 ♡
               </div>
-              <h4 class="mt-4 text-xl font-semibold text-stone-950">
+              <h4 class="mt-4 text-xl font-semibold text-stone-950 dark:text-[#f5f5f5]">
                 Occasion-ready
               </h4>
-              <p class="mt-2 text-sm leading-6 text-stone-600">
+              <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-[#c0c0c0]">
                 Signature cakes and boxes made for gifting and celebrations.
               </p>
             </div>
@@ -648,7 +684,9 @@
         </div>
       </section>
 
-      <section class="bg-[#8b5e3c] py-16 sm:py-20 lg:py-24 text-white">
+      <section
+        class="bg-[#8b5e3c] dark:bg-[#1b1b1b] py-16 sm:py-20 lg:py-24 text-white transition-colors duration-300"
+      >
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div
             class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
@@ -672,7 +710,7 @@
           </div>
           <div class="mt-10 grid gap-6 lg:grid-cols-3">
             <figure
-              class="rounded-[2rem] bg-white/10 p-8 shadow-xl shadow-amber-950/20 ring-1 ring-white/15 backdrop-blur"
+              class="rounded-[2rem] bg-white/10 dark:bg-white/5 p-8 shadow-xl shadow-amber-950/20 dark:shadow-black/40 ring-1 ring-white/15 dark:ring-white/5 backdrop-blur"
             >
               <blockquote class="text-lg leading-8 text-amber-50">
                 “The croissants are exceptional, and the space feels like a
@@ -684,7 +722,7 @@
               </figcaption>
             </figure>
             <figure
-              class="rounded-[2rem] bg-white/10 p-8 shadow-xl shadow-amber-950/20 ring-1 ring-white/15 backdrop-blur"
+              class="rounded-[2rem] bg-white/10 dark:bg-white/5 p-8 shadow-xl shadow-amber-950/20 dark:shadow-black/40 ring-1 ring-white/15 dark:ring-white/5 backdrop-blur"
             >
               <blockquote class="text-lg leading-8 text-amber-50">
                 “We ordered a custom cake for our anniversary and it looked like
@@ -696,7 +734,7 @@
               </figcaption>
             </figure>
             <figure
-              class="rounded-[2rem] bg-white/10 p-8 shadow-xl shadow-amber-950/20 ring-1 ring-white/15 backdrop-blur"
+              class="rounded-[2rem] bg-white/10 dark:bg-white/5 p-8 shadow-xl shadow-amber-950/20 dark:shadow-black/40 ring-1 ring-white/15 dark:ring-white/5 backdrop-blur"
             >
               <blockquote class="text-lg leading-8 text-amber-50">
                 “Beautiful presentation, balanced sweetness, and the coffee is
@@ -716,7 +754,7 @@
       <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div
-            class="rounded-[2rem] bg-white p-8 shadow-xl shadow-stone-200/60 ring-1 ring-stone-200/40"
+            class="rounded-[2rem] bg-white dark:bg-[#1e1e1e] p-8 shadow-xl shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-stone-200/40 dark:ring-[#3a3a3a] transition-colors duration-300"
           >
             <p
               class="text-sm font-semibold uppercase tracking-[0.35em] text-amber-700"
@@ -724,35 +762,35 @@
               Opening Hours
             </p>
             <h3
-              class="mt-4 text-3xl font-semibold tracking-tight text-stone-950"
+              class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 dark:text-[#f5f5f5]"
             >
               Open daily for fresh bakes and coffee.
             </h3>
             <div
-              class="mt-6 space-y-4 text-stone-700"
+              class="mt-6 space-y-4 text-stone-700 dark:text-[#c0c0c0]"
               data-fws-slot="business.hours"
             >
               <div
-                class="flex items-center justify-between rounded-2xl bg-stone-50 px-5 py-4"
+                class="flex items-center justify-between rounded-2xl bg-stone-50 dark:bg-[#242424] px-5 py-4 transition-colors duration-300"
               >
                 <span>Monday - Friday</span>
-                <span class="font-semibold text-stone-950"
+                <span class="font-semibold text-stone-950 dark:text-[#f5f5f5]"
                   >7:00 AM - 7:00 PM</span
                 >
               </div>
               <div
-                class="flex items-center justify-between rounded-2xl bg-stone-50 px-5 py-4"
+                class="flex items-center justify-between rounded-2xl bg-stone-50 dark:bg-[#242424] px-5 py-4 transition-colors duration-300"
               >
                 <span>Saturday</span>
-                <span class="font-semibold text-stone-950"
+                <span class="font-semibold text-stone-950 dark:text-[#f5f5f5]"
                   >8:00 AM - 8:00 PM</span
                 >
               </div>
               <div
-                class="flex items-center justify-between rounded-2xl bg-stone-50 px-5 py-4"
+                class="flex items-center justify-between rounded-2xl bg-stone-50 dark:bg-[#242424] px-5 py-4 transition-colors duration-300"
               >
                 <span>Sunday</span>
-                <span class="font-semibold text-stone-950"
+                <span class="font-semibold text-stone-950 dark:text-[#f5f5f5]"
                   >8:00 AM - 5:00 PM</span
                 >
               </div>
@@ -761,7 +799,7 @@
 
           <div id="contact" class="grid gap-6 md:grid-cols-2">
             <div
-              class="rounded-[2rem] bg-[#fffaf3] p-8 shadow-xl shadow-stone-200/60 ring-1 ring-white"
+              class="rounded-[2rem] bg-[#fffaf3] dark:bg-[#242424] p-8 shadow-xl shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-white dark:ring-[#3a3a3a] transition-colors duration-300"
             >
               <p
                 class="text-sm font-semibold uppercase tracking-[0.35em] text-amber-700"
@@ -769,23 +807,23 @@
                 Contact Us
               </p>
               <h3
-                class="mt-4 text-3xl font-semibold tracking-tight text-stone-950"
+                class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 dark:text-[#f5f5f5]"
               >
                 Plan a visit, place an order, or ask about custom cakes.
               </h3>
-              <div class="mt-6 space-y-4 text-stone-700">
+              <div class="mt-6 space-y-4 text-stone-700 dark:text-[#c0c0c0]">
                 <p>
-                  <span class="font-semibold text-stone-950">Email:</span>
+                  <span class="font-semibold text-stone-950 dark:text-[#f5f5f5]">Email:</span>
                   <span data-fws-slot="contact.email"
                     >hello@bakerydelight.com</span
                   >
                 </p>
                 <p>
-                  <span class="font-semibold text-stone-950">Phone:</span>
+                  <span class="font-semibold text-stone-950 dark:text-[#f5f5f5]">Phone:</span>
                   <span data-fws-slot="contact.phone">+61 2 9012 3456</span>
                 </p>
                 <p>
-                  <span class="font-semibold text-stone-950">Address:</span>
+                  <span class="font-semibold text-stone-950 dark:text-[#f5f5f5]">Address:</span>
                   <span data-fws-slot="contact.address"
                     >42 Bourke Street, Melbourne VIC 3000, Australia</span
                   >
@@ -799,7 +837,7 @@
               </a>
             </div>
             <div
-              class="rounded-[2rem] bg-white p-8 shadow-xl shadow-stone-200/60 ring-1 ring-stone-200/40"
+              class="rounded-[2rem] bg-white dark:bg-[#1e1e1e] p-8 shadow-xl shadow-stone-200/60 dark:shadow-black/40 ring-1 ring-stone-200/40 dark:ring-[#3a3a3a] transition-colors duration-300"
             >
               <p
                 class="text-sm font-semibold uppercase tracking-[0.35em] text-amber-700"
@@ -814,19 +852,25 @@
                 />
               </div>
               <div class="mt-6 grid gap-4 sm:grid-cols-3">
-                <div class="rounded-2xl bg-stone-50 p-4 text-center">
-                  <p class="text-sm text-stone-500">Fresh</p>
-                  <p class="mt-1 font-semibold text-stone-950">Daily bakes</p>
+                <div
+                  class="rounded-2xl border border-stone-200 dark:border-[#3a3a3a] bg-stone-50 dark:bg-[#242424] p-4 text-center transition-colors duration-300"
+                >
+                  <p class="text-sm text-stone-500 dark:text-[#c0c0c0]">Fresh</p>
+                  <p class="mt-1 font-semibold text-stone-950 dark:text-[#f5f5f5]">Daily bakes</p>
                 </div>
-                <div class="rounded-2xl bg-stone-50 p-4 text-center">
-                  <p class="text-sm text-stone-500">Service</p>
-                  <p class="mt-1 font-semibold text-stone-950">
+                <div
+                  class="rounded-2xl border border-stone-200 dark:border-[#3a3a3a] bg-stone-50 dark:bg-[#242424] p-4 text-center transition-colors duration-300"
+                >
+                  <p class="text-sm text-stone-500 dark:text-[#c0c0c0]">Service</p>
+                  <p class="mt-1 font-semibold text-stone-950 dark:text-[#f5f5f5]">
                     Dine-in & takeaway
                   </p>
                 </div>
-                <div class="rounded-2xl bg-stone-50 p-4 text-center">
-                  <p class="text-sm text-stone-500">Specialty</p>
-                  <p class="mt-1 font-semibold text-stone-950">Custom cakes</p>
+                <div
+                  class="rounded-2xl border border-stone-200 dark:border-[#3a3a3a] bg-stone-50 dark:bg-[#242424] p-4 text-center transition-colors duration-300"
+                >
+                  <p class="text-sm text-stone-500 dark:text-[#c0c0c0]">Specialty</p>
+                  <p class="mt-1 font-semibold text-stone-950 dark:text-[#f5f5f5]">Custom cakes</p>
                 </div>
               </div>
             </div>
@@ -834,7 +878,7 @@
         </div>
       </section>
 
-      <section class="bg-white/60 py-16 sm:py-20 lg:py-24">
+      <section class="bg-white/60 dark:bg-[#242424]/90 py-16 sm:py-20 lg:py-24 transition-colors duration-300">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div
             class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
@@ -846,18 +890,18 @@
                 Instagram / Social
               </p>
               <h3
-                class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 sm:text-4xl"
+                class="mt-4 text-3xl font-semibold tracking-tight text-stone-950 dark:text-[#f5f5f5]"
               >
                 A feed designed to be shared, saved, and craved.
               </h3>
             </div>
-            <div class="space-y-2 text-sm text-stone-600">
+            <div class="space-y-2 text-sm text-stone-600 dark:text-[#c0c0c0]">
               <p>
-                <span class="font-semibold text-stone-900">Instagram:</span>
+                <span class="font-semibold text-stone-900 dark:text-[#f5f5f5]">Instagram:</span>
                 <span data-fws-slot="social.instagram">@bakerydelight</span>
               </p>
               <p>
-                <span class="font-semibold text-stone-900">Facebook:</span>
+                <span class="font-semibold text-stone-900 dark:text-[#f5f5f5]">Facebook:</span>
                 <span data-fws-slot="social.facebook">Bakery Delight</span>
               </p>
             </div>
@@ -904,7 +948,7 @@
       </section>
     </main>
 
-    <footer class="border-t border-white/70 bg-[#f7efe4]">
+    <footer class="border-t border-white/70 dark:border-[#3a3a3a] bg-[#f7efe4] dark:bg-[#1e1e1e] transition-colors duration-300">
       <div
         class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.3fr_0.7fr_0.7fr] lg:px-8"
       >
@@ -922,7 +966,7 @@
                 Bakery Delight
               </p>
               <p
-                class="text-lg font-semibold text-stone-950"
+                class="text-lg font-semibold text-stone-950 dark:text-[#f5f5f5]"
                 data-fws-slot="business.name"
               >
                 Bakery Delight
@@ -930,7 +974,7 @@
             </div>
           </div>
           <p
-            class="mt-5 max-w-xl text-sm leading-7 text-stone-600"
+            class="mt-5 max-w-xl text-sm leading-7 text-stone-600 dark:text-[#c0c0c0]"
             data-fws-slot="business.description"
           >
             A refined Australian bakery destination for pastries, cakes, coffee,
@@ -943,22 +987,22 @@
           >
             Navigate
           </p>
-          <ul class="mt-4 space-y-3 text-sm text-stone-600">
+          <ul class="mt-4 space-y-3 text-sm text-stone-600 dark:text-[#c0c0c0]">
             <li>
-              <a href="#about" class="transition hover:text-amber-800">About</a>
+              <a href="#about" class="transition hover:text-amber-800 dark:hover:text-[#f4a460]">About</a>
             </li>
             <li>
-              <a href="#products" class="transition hover:text-amber-800"
+              <a href="#products" class="transition hover:text-amber-800 dark:hover:text-[#f4a460]"
                 >Products</a
               >
             </li>
             <li>
-              <a href="#gallery" class="transition hover:text-amber-800"
+              <a href="#gallery" class="transition hover:text-amber-800 dark:hover:text-[#f4a460]"
                 >Gallery</a
               >
             </li>
             <li>
-              <a href="#contact" class="transition hover:text-amber-800"
+              <a href="#contact" class="transition hover:text-amber-800 dark:hover:text-[#f4a460]"
                 >Contact</a
               >
             </li>
@@ -970,7 +1014,7 @@
           >
             Visit
           </p>
-          <div class="mt-4 space-y-3 text-sm text-stone-600">
+          <div class="mt-4 space-y-3 text-sm text-stone-600 dark:text-[#c0c0c0]">
             <p data-fws-slot="contact.address">
               42 Bourke Street, Melbourne VIC 3000, Australia
             </p>
@@ -980,29 +1024,13 @@
         </div>
       </div>
       <div
-        class="border-t border-stone-200/80 py-5 text-center text-sm text-stone-500"
+        class="border-t border-stone-200/80 dark:border-[#3a3a3a] py-5 text-center text-sm text-stone-500 dark:text-[#c0c0c0] transition-colors duration-300"
       >
         <span data-fws-slot="fws.byline"
           >Template by kirantikoo · made with FreeWebStore</span
         >
       </div>
     </footer>
-    <script>
-      (function () {
-        var btn = document.getElementById("mobile-menu-button");
-        var menu = document.getElementById("mobile-menu");
-        if (!btn || !menu) return;
-        btn.addEventListener("click", function () {
-          var isHidden = menu.classList.contains("hidden");
-          if (isHidden) {
-            menu.classList.remove("hidden");
-            btn.setAttribute("aria-expanded", "true");
-          } else {
-            menu.classList.add("hidden");
-            btn.setAttribute("aria-expanded", "false");
-          }
-        });
-      })();
-    </script>
+    </div>
   </body>
 </html>
